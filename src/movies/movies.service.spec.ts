@@ -1,6 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { checkServerIdentity } from 'tls';
 import { MoviesService } from './movies.service';
 
 describe('MoviesService', () => {
@@ -70,6 +69,28 @@ describe('MoviesService', () => {
             });
             const afterCreate = service.getAll().length;
             expect(afterCreate).toBeGreaterThan(beforeCreate);
+        });
+    });
+
+    describe('update', () => {
+        it('should update a movie', () => {
+            service.create({
+                title: 'Test Movie',
+                genres: ['test'],
+                year: 2000,
+            });
+            service.update(1, {
+                title: 'Updated Test',
+            });
+            const movie = service.getOne(1);
+            expect(movie.title).toEqual('Updated Test');
+        });
+        it('should throw a NotFoundException', () => {
+            try {
+                service.update(999, {});
+            } catch (e) {
+                expect(e).toBeInstanceOf(NotFoundException);
+            }
         });
     });
 });
