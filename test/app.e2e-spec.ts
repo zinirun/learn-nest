@@ -84,4 +84,10 @@ describe('AppController (e2e)', () => {
             return request(app.getHttpServer()).delete('/movies/999').expect(404);
         });
     });
+
+    describe('/movies/search?year=:number', () => {
+        it('GET 200', () => {
+            return request(app.getHttpServer()).get('/movies/search?year=0').expect(200).expect([]);
+        });
+    });
 });
