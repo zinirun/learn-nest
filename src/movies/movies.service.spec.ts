@@ -93,4 +93,20 @@ describe('MoviesService', () => {
             }
         });
     });
+
+    describe('search', () => {
+        it('should return movies after year input', () => {
+            service.create({
+                title: 'Test Movie',
+                genres: ['test'],
+                year: 2000,
+            });
+            const movie = service.search(1999);
+            expect(movie.length).toEqual(1);
+        });
+        it('should return empty movies', () => {
+            const movieNotExists = service.search(2001);
+            expect(movieNotExists.length).toEqual(0);
+        });
+    });
 });
