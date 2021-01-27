@@ -24,14 +24,14 @@ export class MoviesService {
         this.movies = this.movies.filter((movie) => movie.id !== id);
     }
 
-    create(movieData: CreateMovieDto) {
+    create(movieData: CreateMovieDto): void {
         this.movies.push({
             id: this.movies.length + 1,
             ...movieData,
         });
     }
 
-    update(id: number, updateData: UpdateMovieDto) {
+    update(id: number, updateData: UpdateMovieDto): void {
         const movie = this.getOne(id);
         this.deleteOne(id);
         this.movies.push({ ...movie, ...updateData });
